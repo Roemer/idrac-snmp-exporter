@@ -19,6 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: curl --silent --output /dell-mib.zip $DELL_MIB_URL
+      - run: ls /
       - uses: montudor/action-zip@v1.0.0
         with:
             args: unzip -qq /dell-mib.zip -d /dell-mib
