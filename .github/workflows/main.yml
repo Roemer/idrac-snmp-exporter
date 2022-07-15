@@ -14,13 +14,12 @@ jobs:
     container: prom/snmp-generator:v0.20.0
 
     steps:
-      - name: Test
-        run: ls
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Test2
-        run: ls
-      - name: Test3
-        run: ls /
-      - name: Run a one-line script
-        run: ./generator generate
+      - name: Generate
+        run: /go/bin/generator generate
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: snmp.yml
