@@ -19,11 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: curl --silent --output /dell-mib.zip $DELL_MIB_URL
-      - run: ls /
-      - run: unzip /dell-mib.zip -d /dell-mib
-      - uses: montudor/action-zip@v1.0.0
-        with:
-            args: unzip -qq /dell-mib.zip -d /dell-mib
+      - run: unzip -q /dell-mib.zip -d /dell-mib
       - run: mkdir -p ./mibs
       - run: cp /dell-mib/support/station/mibs/iDRAC-SMIv2.mib ./mibs/iDRAC-SMIv2.mib
       - name: Generate
