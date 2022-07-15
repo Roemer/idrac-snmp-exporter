@@ -18,5 +18,9 @@ jobs:
         run: ls
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Test2
+        run: ls
+      - name: Test3
+        run: ls /
       - name: Run a one-line script
         run: ./generator generate
