@@ -1,20 +1,53 @@
 modules:
   dell_idrac:
     walk:
+      # informationGroup
+      ## racInfoGroup
       - 1.3.6.1.4.1.674.10892.5.1.1.2              # racShortName
       - 1.3.6.1.4.1.674.10892.5.1.1.8              # racFirmwareVersion
+      ## systemInfoGroup
       - 1.3.6.1.4.1.674.10892.5.1.3.2              # systemServiceTag
       - 1.3.6.1.4.1.674.10892.5.1.3.12             # systemModelName
+      # statusGroup
       - 1.3.6.1.4.1.674.10892.5.2.1                # globalSystemStatus
+      - 1.3.6.1.4.1.674.10892.5.2.3                # globalStorageStatus
+      - 1.3.6.1.4.1.674.10892.5.2.4                # systemPowerState
+      - 1.3.6.1.4.1.674.10892.5.2.5                # systemPowerUpTime
+      # systemDetailsGroup
+      ## chassisInformationGroup
+      - 1.3.6.1.4.1.674.10892.5.4.300.50.1.8       # systemBIOSVersionName
+      ## powerGroup
+      - 1.3.6.1.4.1.674.10892.5.4.600.12.1.5       # powerSupplyStatus
+      - 1.3.6.1.4.1.674.10892.5.4.600.12.1.5       # powerSupplySensorState
       - 1.3.6.1.4.1.674.10892.5.4.600.30.1.5       # amperageProbeStatus
       - 1.3.6.1.4.1.674.10892.5.4.600.30.1.6       # amperageProbeReading
+      - 1.3.6.1.4.1.674.10892.5.4.600.50.1.5       # systemBatteryStatus
+      - 1.3.6.1.4.1.674.10892.5.4.600.60.1.7       # powerUsageCumulativeWattage
+      - 1.3.6.1.4.1.674.10892.5.4.600.60.1.8       # powerUsageCumulativeWattageStartDateName
+      ## thermalGroup
       - 1.3.6.1.4.1.674.10892.5.4.700.12.1.5       # coolingDeviceStatus
       - 1.3.6.1.4.1.674.10892.5.4.700.12.1.6       # coolingDeviceReading
+      - 1.3.6.1.4.1.674.10892.5.4.700.20.1.5       # temperatureProbeStatus
+      - 1.3.6.1.4.1.674.10892.5.4.700.20.1.6       # temperatureProbeReading
+      ## deviceGroup
+      ## slotGroup
+      ## fruGroup
+      # storageDetailsGroup
+      ## physicalDevices
+      ## logicalDevices
     lookups:
-      - source_indexes: [coolingDevicechassisIndex, coolingDeviceIndex]
-        lookup: coolingDeviceLocationName
+      - source_indexes: [powerSupplychassisIndex, powerSupplyIndex]
+        lookup: powerSupplyFQDD
+      - source_indexes: [amperageProbechassisIndex, amperageProbeIndex]
+        lookup: amperageProbeType
       - source_indexes: [amperageProbechassisIndex, amperageProbeIndex]
         lookup: amperageProbeLocationName
+      - source_indexes: [coolingDevicechassisIndex, coolingDeviceIndex]
+        lookup: coolingDeviceType
+      - source_indexes: [coolingDevicechassisIndex, coolingDeviceIndex]
+        lookup: coolingDeviceFQDD
+      - source_indexes: [temperatureProbechassisIndex, temperatureProbeIndex]
+        lookup: temperatureProbeLocationName
     overrides:
       racShortName:
         type: DisplayString
@@ -26,11 +59,31 @@ modules:
         type: DisplayString
       globalSystemStatus:
         type: EnumAsStateSet
+      globalStorageStatus:
+        type: EnumAsStateSet
+      systemPowerState:
+        type: EnumAsStateSet
+      systemBIOSVersionName:
+        type: DisplayString
+      powerSupplyStatus:
+        type: EnumAsStateSet
+      powerSupplySensorState:
+        type: gauge
+      powerSupplyFQDD:
+        type: DisplayString
       amperageProbeLocationName:
         type: DisplayString
       amperageProbeStatus:
         type: EnumAsStateSet
-      coolingDeviceLocationName:
+      systemBatteryStatus:
+        type: EnumAsStateSet
+      powerUsageCumulativeWattage:
+        type: counter
+      coolingDeviceFQDD:
         type: DisplayString
       coolingDeviceStatus:
+        type: EnumAsStateSet
+      temperatureProbeLocationName:
+        type: DisplayString
+      temperatureProbeStatus:
         type: EnumAsStateSet
