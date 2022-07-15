@@ -7,6 +7,9 @@ on:
     branches: [ "main" ]
 
   workflow_dispatch:
+  
+env:
+  DELL_MIB_URL: https://downloads.dell.com/FOLDER05075499M/1/Dell-OM-MIBS-910_A00.zip?uid=d6ce9226-aad9-4081-7338-a26446a6e850&fn=Dell-OM-MIBS-910_A00.zip
 
 jobs:
   build:
@@ -14,12 +17,16 @@ jobs:
     container: prom/snmp-generator:v0.20.0
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - run: curl --silent --output /dell-mib.zip $DELL_MIB_URL
+      - uses: montudor/action-zip@v1.0.0
+        with:
+            args: unzip -qq /dell-mib.zip -d /dell-mib
+      - run: mkdir -p ./mibs &&
+      - run: cp /dell-mib/support/station/mibs/iDRAC-SMIv2.mib ./mibs/iDRAC-SMIv2.mib
       - name: Generate
         run: /go/bin/generator generate
-      - name: Upload
-        uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
           path: snmp.yml
