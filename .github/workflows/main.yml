@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: docker pull prom/snmp-generator:v0.20.0
+    container: prom/snmp-generator:v0.20.0
 
     steps:
       - uses: actions/checkout@v3
