@@ -14,7 +14,11 @@ modules:
     overrides:
       globalSystemStatus:
         type: EnumAsStateSet
+      amperageProbeLocationName:
+        type: DisplayString
       amperageProbeStatus:
         type: EnumAsStateSet
+      coolingDeviceLocationName:
+        type: DisplayString
       coolingDeviceStatus:
         type: EnumAsStateSet
