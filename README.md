@@ -27,4 +27,6 @@ nano generator.yml
 /go/bin/generator generate
 # Inspect the generated file
 cat snmp.yml
+# Or all editing in one handy line (for copy/pasting/generating/displaying)
+rm generator.yml && nano generator.yml && rm -f snmp.yml && /go/bin/generator generate && clear && cat snmp.yml
 ```
