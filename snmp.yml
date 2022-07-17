@@ -462,12 +462,6 @@ dell_idrac:
     - labels:
       - amperageProbechassisIndex
       - amperageProbeIndex
-      labelname: amperageProbeType
-      oid: 1.3.6.1.4.1.674.10892.5.4.600.30.1.7
-      type: gauge
-    - labels:
-      - amperageProbechassisIndex
-      - amperageProbeIndex
       labelname: amperageProbeLocationName
       oid: 1.3.6.1.4.1.674.10892.5.4.600.30.1.8
       type: DisplayString
@@ -496,15 +490,47 @@ dell_idrac:
     - labels:
       - amperageProbechassisIndex
       - amperageProbeIndex
-      labelname: amperageProbeType
-      oid: 1.3.6.1.4.1.674.10892.5.4.600.30.1.7
+      labelname: amperageProbeLocationName
+      oid: 1.3.6.1.4.1.674.10892.5.4.600.30.1.8
+      type: DisplayString
+  - name: amperageProbeType
+    oid: 1.3.6.1.4.1.674.10892.5.4.600.30.1.7
+    type: EnumAsInfo
+    help: 0600.0030.0001.0007 This attribute defines the type of the amperage probe.
+      - 1.3.6.1.4.1.674.10892.5.4.600.30.1.7
+    indexes:
+    - labelname: amperageProbechassisIndex
       type: gauge
+    - labelname: amperageProbeIndex
+      type: gauge
+    lookups:
     - labels:
       - amperageProbechassisIndex
       - amperageProbeIndex
       labelname: amperageProbeLocationName
       oid: 1.3.6.1.4.1.674.10892.5.4.600.30.1.8
       type: DisplayString
+    enum_values:
+      1: amperageProbeTypeIsOther
+      2: amperageProbeTypeIsUnknown
+      3: amperageProbeTypeIs1Point5Volt
+      4: amperageProbeTypeIs3Point3volt
+      5: amperageProbeTypeIs5Volt
+      6: amperageProbeTypeIsMinus5Volt
+      7: amperageProbeTypeIs12Volt
+      8: amperageProbeTypeIsMinus12Volt
+      9: amperageProbeTypeIsIO
+      10: amperageProbeTypeIsCore
+      11: amperageProbeTypeIsFLEA
+      12: amperageProbeTypeIsBattery
+      13: amperageProbeTypeIsTerminator
+      14: amperageProbeTypeIs2Point5Volt
+      15: amperageProbeTypeIsGTL
+      16: amperageProbeTypeIsDiscrete
+      23: amperageProbeTypeIsPowerSupplyAmps
+      24: amperageProbeTypeIsPowerSupplyWatts
+      25: amperageProbeTypeIsSystemAmps
+      26: amperageProbeTypeIsSystemWatts
   - name: systemBatteryStatus
     oid: 1.3.6.1.4.1.674.10892.5.4.600.50.1.5
     type: EnumAsStateSet
@@ -558,12 +584,6 @@ dell_idrac:
     - labels:
       - coolingDevicechassisIndex
       - coolingDeviceIndex
-      labelname: coolingDeviceType
-      oid: 1.3.6.1.4.1.674.10892.5.4.700.12.1.7
-      type: gauge
-    - labels:
-      - coolingDevicechassisIndex
-      - coolingDeviceIndex
       labelname: coolingDeviceFQDD
       oid: 1.3.6.1.4.1.674.10892.5.4.700.12.1.19
       type: DisplayString
@@ -592,15 +612,38 @@ dell_idrac:
     - labels:
       - coolingDevicechassisIndex
       - coolingDeviceIndex
-      labelname: coolingDeviceType
-      oid: 1.3.6.1.4.1.674.10892.5.4.700.12.1.7
+      labelname: coolingDeviceFQDD
+      oid: 1.3.6.1.4.1.674.10892.5.4.700.12.1.19
+      type: DisplayString
+  - name: coolingDeviceType
+    oid: 1.3.6.1.4.1.674.10892.5.4.700.12.1.7
+    type: EnumAsInfo
+    help: 0700.0012.0001.0007 This attribute defines the type of the cooling device.
+      - 1.3.6.1.4.1.674.10892.5.4.700.12.1.7
+    indexes:
+    - labelname: coolingDevicechassisIndex
       type: gauge
+    - labelname: coolingDeviceIndex
+      type: gauge
+    lookups:
     - labels:
       - coolingDevicechassisIndex
       - coolingDeviceIndex
       labelname: coolingDeviceFQDD
       oid: 1.3.6.1.4.1.674.10892.5.4.700.12.1.19
       type: DisplayString
+    enum_values:
+      1: coolingDeviceTypeIsOther
+      2: coolingDeviceTypeIsUnknown
+      3: coolingDeviceTypeIsAFan
+      4: coolingDeviceTypeIsABlower
+      5: coolingDeviceTypeIsAChipFan
+      6: coolingDeviceTypeIsACabinetFan
+      7: coolingDeviceTypeIsAPowerSupplyFan
+      8: coolingDeviceTypeIsAHeatPipe
+      9: coolingDeviceTypeIsRefrigeration
+      10: coolingDeviceTypeIsActiveCooling
+      11: coolingDeviceTypeIsPassiveCooling
   - name: temperatureProbeStatus
     oid: 1.3.6.1.4.1.674.10892.5.4.700.20.1.5
     type: EnumAsStateSet
