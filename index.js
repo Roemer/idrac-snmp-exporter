@@ -14,7 +14,7 @@ const registry = new client.Registry();
 
 // Create the metrics
 const metrics = [
-	new AmperageProbeMetrics(registry),
+    new AmperageProbeMetrics(registry),
 ];
 
 // Configure express
@@ -31,8 +31,8 @@ app.listen(port, () => console.log(`Server is running on http://localhost:${port
 async function updateMetrics() {
     registry.resetMetrics();
     var session = snmp.createSession("192.168.44.68", "public");
-	for (var metric of metrics) {
-		await metric.update(session);
-	}
+    for (var metric of metrics) {
+        await metric.update(session);
+    }
     session.close();
 }
