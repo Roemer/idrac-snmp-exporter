@@ -4,23 +4,23 @@ class SnmpMetricsBase {
     constructor(registry) {
         this.registry = registry;
         this.metricsPrefix = process.env.METRICS_PREFIX ?? 'idrac_';
-		
-		// Load the iDrac MIB
-		var store = snmp.createModuleStore();
-		store.loadFromFile('./mibs/iDRAC-SMIv2.mib');
-		this.idracMibJsonModule = store.getModule("IDRAC-MIB-SMIv2");
+
+        // Load the iDrac MIB
+        var store = snmp.createModuleStore();
+        store.loadFromFile('./mibs/iDRAC-SMIv2.mib');
+        this.idracMibJsonModule = store.getModule("IDRAC-MIB-SMIv2");
     }
 
     get metricPrefix() {
         return metricsPrefix;
     }
-	
-	convertEnumToText(enumName, enumValue, postProcess) {
-		var values = this.idracMibJsonModule[enumName].SYNTAX.INTEGER;
-		var value = values[enumValue];
-		var finalValue = postProcess(value);
-		return finalValue;
-	}
+
+    convertEnumToText(enumName, enumValue, postProcess) {
+        var values = this.idracMibJsonModule[enumName].SYNTAX.INTEGER;
+        var value = values[enumValue];
+        var finalValue = postProcess(value);
+        return finalValue;
+    }
 
     snmpGet(session, oids) {
         return new Promise(function (resolve, reject) {
