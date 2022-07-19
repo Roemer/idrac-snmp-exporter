@@ -11,15 +11,30 @@ class SnmpMetricsBase {
         this.idracMibJsonModule = store.getModule("IDRAC-MIB-SMIv2");
     }
 
-    get metricPrefix() {
-        return metricsPrefix;
+    getMetricName(metricName) {
+        return `${this.metricsPrefix}${metricName}`;
     }
 
     convertEnumToText(enumName, enumValue, postProcess) {
-        var values = this.idracMibJsonModule[enumName].SYNTAX.INTEGER;
+        var values = this.getEnumValues(enumName, postProcess);
         var value = values[enumValue];
-        var finalValue = postProcess(value);
-        return finalValue;
+        return value;
+    }
+
+    getEnumValues(enumName, postProcess) {
+        var values = this.idracMibJsonModule[enumName].SYNTAX.INTEGER;
+        Object.keys(values).forEach(function (key) {
+            var value = values[key];
+            values[key] = postProcess ? postProcess(value) : value;
+        });
+        return values;
+    }
+
+    setStateSetMetricValues(enumName, metricSetMethod) {
+        var values = this.getEnumValues(enumName);
+        for (const key in values) {
+            metricSetMethod(key, values[key]);
+        }
     }
 
     snmpGet(session, oids) {

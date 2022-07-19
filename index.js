@@ -5,6 +5,10 @@ const client = require('prom-client');
 const snmp = require("net-snmp");
 
 const AmperageProbeMetrics = require('./metrics/AmperageProbeMetrics.js');
+const CoolingDeviceMetrics = require('./metrics/CoolingDeviceMetrics.js');
+const GlobalMetrics = require('./metrics/GlobalMetrics.js');
+const ChassisInformationMetrics = require('./metrics/ChassisInformationMetrics.js');
+const MemoryDeviceMetrics = require('./metrics/MemoryDeviceMetrics.js');
 
 // Create the express server
 const app = express();
@@ -15,6 +19,10 @@ const registry = new client.Registry();
 // Create the metrics
 const metrics = [
     new AmperageProbeMetrics(registry),
+    new CoolingDeviceMetrics(registry),
+    new GlobalMetrics(registry),
+    new ChassisInformationMetrics(registry),
+    new MemoryDeviceMetrics(registry),
 ];
 
 // Configure express
