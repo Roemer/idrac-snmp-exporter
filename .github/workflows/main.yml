@@ -11,6 +11,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: roemer/idrac-snmp-exporter:latest
     steps:
       - uses: actions/checkout@v3
-      - run: docker compose build --no-cache
+      - name: Docker build
+        run: docker compose build --no-cache
+      - name: Docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Docker push
+        run: docker push $IMAGE_NAME
+      - name: Docker logout
+        run: docker logout

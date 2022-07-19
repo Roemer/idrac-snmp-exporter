@@ -27,7 +27,14 @@ const metrics = [
 
 // Configure express
 app.get('/metrics', async (req, res) => {
-    await updateMetrics();
+    var target = req.query.target;
+    if (!target) {
+        return res.status(500).send({
+            message: 'No target parameter!'
+         });
+    }
+    var community = req.query.community ?? 'public';
+    await updateMetrics(target, community);
     res.setHeader('Content-Type', registry.contentType);
     res.send(await registry.metrics());
 });
@@ -36,9 +43,9 @@ app.get('/metrics', async (req, res) => {
 const port = 8085;
 app.listen(port, () => console.log(`Server is running on http://localhost:${port}, metrics are exposed on http://localhost:${port}/metrics`));
 
-async function updateMetrics() {
+async function updateMetrics(target, community) {
     registry.resetMetrics();
-    var session = snmp.createSession("192.168.44.68", "public");
+    var session = snmp.createSession(target, community);
     for (var metric of metrics) {
         await metric.update(session);
     }
