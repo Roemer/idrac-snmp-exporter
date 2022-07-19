@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  drac-snmp-exporter:
+  idrac-snmp-exporter:
     build:
       context: .
       dockerfile: Dockerfile
