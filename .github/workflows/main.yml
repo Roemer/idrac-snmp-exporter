@@ -7,32 +7,10 @@ on:
     branches: [ "main" ]
 
   workflow_dispatch:
-  
-env:
-  DELL_MIB_URL: https://downloads.dell.com/FOLDER05075499M/1/Dell-OM-MIBS-910_A00.zip?uid=d6ce9226-aad9-4081-7338-a26446a6e850&fn=Dell-OM-MIBS-910_A00.zip
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: prom/snmp-generator:v0.20.0
-
     steps:
       - uses: actions/checkout@v3
-      - run: curl --silent --output /dell-mib.zip $DELL_MIB_URL
-      - run: unzip -q /dell-mib.zip -d /dell-mib
-      - run: mkdir -p ./mibs
-      - run: cp /dell-mib/support/station/mibs/iDRAC-SMIv2.mib ./mibs/iDRAC-SMIv2.mib
-      - run: curl --silent --output ./mibs/SNMPv2-SMI.mib https://www.circitor.fr/Mibs/Mib/S/SNMPv2-SMI.mib
-      - run: curl --silent --output ./mibs/SNMPv2-TC.mib https://www.circitor.fr/Mibs/Mib/S/SNMPv2-TC.mib
-      - name: Generate
-        run: /go/bin/generator generate
-      - uses: actions/upload-artifact@v3
-        with:
-          name: snmp.yml
-          path: snmp.yml
-      - uses: EndBug/add-and-commit@v9.0.1
-        with:
-          add: 'snmp.yml'
-          message: Updated generated yaml file
-          committer_name: GitHub Actions
-          committer_email: actions@github.com
+      - run: docker compose build --no-cache
