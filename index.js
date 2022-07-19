@@ -40,7 +40,7 @@ app.get('/metrics', async (req, res) => {
 });
 
 // Start express
-const port = 8085;
+const port = 8080;
 app.listen(port, () => console.log(`Server is running on http://localhost:${port}, metrics are exposed on http://localhost:${port}/metrics`));
 
 async function updateMetrics(target, community) {
