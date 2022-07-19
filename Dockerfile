@@ -7,8 +7,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 # Copy the app
 COPY index.js ./
-COPY metrics ./
-COPY mibs ./
+COPY metrics ./metrics
+COPY mibs ./mibs
 
 # Install the dependencies
 RUN npm install
