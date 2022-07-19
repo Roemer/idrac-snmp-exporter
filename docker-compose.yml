@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  drac-snmp-exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: roemer/idrac-snmp-exporter:latest
+    ports:
+      - 8080:8080/tcp
+    environment:
+      - METRICS_PREFIX=idrac_
