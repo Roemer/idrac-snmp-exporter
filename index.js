@@ -2,7 +2,7 @@
 
 const express = require('express');
 const client = require('prom-client');
-const snmp = require("net-snmp");
+const snmp = require('net-snmp');
 
 const AmperageProbeMetrics = require('./metrics/AmperageProbeMetrics.js');
 const CoolingDeviceMetrics = require('./metrics/CoolingDeviceMetrics.js');
@@ -26,12 +26,16 @@ const metrics = [
 ];
 
 // Configure express
+app.get('/', async (req, res) => {
+    res.setHeader('content-type', 'text/plain');
+    res.send('Usage: /metrics?target=<idrac-ip>&community=<snpm-community>');
+});
 app.get('/metrics', async (req, res) => {
     var target = req.query.target;
     if (!target) {
         return res.status(500).send({
             message: 'No target parameter!'
-         });
+        });
     }
     var community = req.query.community ?? 'public';
     await updateMetrics(target, community);
